@@ -343,207 +343,375 @@ class SearchService {
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
   final User user;
-  Home({Key key, this.user}) : super(key: key);
+  final bool testing;
+  Home({Key key, this.user, this.testing}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        backgroundColor: Color.fromRGBO(170, 50, 51, 1),
-        bottomNavigationBar: BottomAppBar(
-          color: Color.fromRGBO(140, 0, 1, 1),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.search, color: Colors.white),
-                textColor: Colors.white,
-                //logout button will call signout on our authservice.
-                label: Text('search'),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InstantSearchBar()),
-                  );
-                },
-              ),
-              FlatButton.icon(
-                icon: Icon(Icons.person, color: Colors.white),
-                textColor: Colors.white,
-                //logout button will call signout on our authservice.
-                label: Text('logout'),
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-              ),
-            ],
+    if(!testing) {
+      return Container(
+        child: Scaffold(
+          backgroundColor: Color.fromRGBO(170, 50, 51, 1),
+          bottomNavigationBar: BottomAppBar(
+            color: Color.fromRGBO(140, 0, 1, 1),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlatButton.icon(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  textColor: Colors.white,
+                  //logout button will call signout on our authservice.
+                  label: Text('search'),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InstantSearchBar()),
+                    );
+                  },
+                ),
+                FlatButton.icon(
+                  icon: Icon(Icons.person, color: Colors.white),
+                  textColor: Colors.white,
+                  //logout button will call signout on our authservice.
+                  label: Text('logout'),
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: <Widget>[
-            
-            SizedBox(height: 5.0),
-            SizedBox(height: 20.0),
-            Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
+          body: SingleChildScrollView(
+            child: Column(children: <Widget>[
+
+              SizedBox(height: 5.0),
+              SizedBox(height: 20.0),
+              Container(
+                margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                ),
+                child: Text(
+                  'Book Grab',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              child: Text(
-                'Book Grab',
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nSearch for Specific Book"),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            InstantSearchBar()),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nAdd book for sale"),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Sell(username: user.email)),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+
+              SizedBox(height: 20.0),
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.remove, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nRemove a book"),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Remove(username: user.email)),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                "Users currently selling:",
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 15.0,
                   color: Colors.white,
                 ),
               ),
-            ),
-            Container(
-              width: 250,
-              child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Color.fromRGBO(139, 0, 0, 0.4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.search, color: Colors.white),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0)),
-                        ),
-                        width: 200,
-                        height: 60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                              child: Text("\nSearch for Specific Book"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => InstantSearchBar()),
-                                );
-                              }),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-            SizedBox(height: 20.0),
-            Container(
-              width: 250,
-              child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Color.fromRGBO(139, 0, 0, 0.4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.add, color: Colors.white),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0)),
-                        ),
-                        width: 200,
-                        height: 60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                              child: Text("\nAdd book for sale"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Sell(username: user.email)),
-                                );
-                              }),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-            
-            SizedBox(height: 20.0),
-            Container(
-              width: 250,
-              child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Color.fromRGBO(139, 0, 0, 0.4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.remove, color: Colors.white),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0)),
-                        ),
-                        width: 200,
-                        height: 60,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                              child: Text("\nRemove a book"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Remove(username: user.email)),
-                                );
-                              }),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              "Users currently selling:",
-              style: TextStyle(
-                fontSize: 15.0,
-                color: Colors.white,
-              ),
-            ),
-            StreamBuilder(
-                stream: Firestore.instance.collection('users').snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) return const Text("Loading...");
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot ds = snapshot.data.documents[index];
-                        return UserButton(
-                          ds: ds,
-                        );
-                      });
-                }),
-          ]),
+              StreamBuilder(
+                  stream: Firestore.instance.collection('users').snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return const Text("Loading...");
+                    return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot ds = snapshot.data.documents[index];
+                          return UserButton(
+                            ds: ds,
+                          );
+                        });
+                  }),
+            ]),
+          ),
         ),
-      ),
-    );
+      );
+    }
+    else{
+      return Container(
+        child: Scaffold(
+          backgroundColor: Color.fromRGBO(170, 50, 51, 1),
+          bottomNavigationBar: BottomAppBar(
+            color: Color.fromRGBO(140, 0, 1, 1),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlatButton.icon(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  textColor: Colors.white,
+                  //logout button will call signout on our authservice.
+                  label: Text('search'),
+                  onPressed: () async {
+                  },
+                ),
+                FlatButton.icon(
+                  icon: Icon(Icons.person, color: Colors.white),
+                  textColor: Colors.white,
+                  //logout button will call signout on our authservice.
+                  label: Text('logout'),
+                  onPressed: () {
+                  },
+                ),
+              ],
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Column(children: <Widget>[
+
+              SizedBox(height: 5.0),
+              SizedBox(height: 20.0),
+              Container(
+                margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                ),
+                child: Text(
+                  'Book Grab',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nSearch for Specific Book"),
+                                onTap: () {
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nAdd book for sale"),
+                                onTap: () {
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+
+              SizedBox(height: 20.0),
+              Container(
+                width: 250,
+                child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color.fromRGBO(139, 0, 0, 0.4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.remove, color: Colors.white),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0)),
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                child: Text("\nRemove a book"),
+                                onTap: () {
+                                }),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                "Users currently selling:",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.white,
+                ),
+              ),
+            ]),
+          ),
+        ),
+      );
+    }
   }
 }
