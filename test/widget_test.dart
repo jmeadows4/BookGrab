@@ -24,6 +24,12 @@ import 'package:book_grab/Models/user.dart';
 import 'package:book_grab/screens/home/home.dart';
 
 void main() {
+
+  Widget createWidgetForTesting({Widget child}){
+    return MaterialApp(
+      home: child,
+    );
+  }
   testWidgets('Login Page - Presets', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
@@ -88,7 +94,7 @@ void main() {
   });
   testWidgets('Home Page - Title ', (WidgetTester tester) async{
     User testUser = User(uid: "1234", email: "fake@mail.csuchico.edu" );
-    await tester.pumpWidget(Home(user: testUser));
+    await tester.pumpWidget(createWidgetForTesting(child: new Home(user: testUser, testing: true)));
     expect(find.text('Book Grab'), findsOneWidget);
     expect(find.text('Register'), findsNothing);
 
