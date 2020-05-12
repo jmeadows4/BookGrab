@@ -94,7 +94,7 @@ void main() {
   });
   testWidgets('Home Page - Title ', (WidgetTester tester) async{
     User testUser = User(uid: "1234", email: "fake@mail.csuchico.edu" );
-    await tester.pumpWidget(createWidgetForTesting(child: new Home(user: testUser, testing: true)));
+    await tester.pumpWidget(createWidgetForTesting(child: new Home(user: testUser, testing: false)));
     expect(find.text('Book Grab'), findsOneWidget);
     expect(find.text('Register'), findsNothing);
 
